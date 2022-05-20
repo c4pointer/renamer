@@ -3,7 +3,9 @@
 # created by neo
 # Version-1.0
 
-from tkinter import *
+from tkinter import (Frame, Button, Label, Text, Checkbutton, Entry, Toplevel, Listbox,
+                     Menu, Tk, IntVar, StringVar, SINGLE, ACTIVE, END, SW, SE,
+                     S, UNDERLINE, NORMAL, DISABLED, HORIZONTAL)
 import os
 import platform
 import socket
@@ -53,18 +55,14 @@ class Renamer(Frame):
         self.frame2 = Frame()
         self.frame3 = Frame()
         self.frame4 = Frame()
-        self.frame5 = Frame()
-        self.frame6 = Frame()
-        self.frame7 = Frame()
+
         self.frame.grid()
         self.frame0.grid()
         self.frame1.grid()
         self.frame2.grid()
         self.frame3.grid()
         self.frame4.grid()
-        self.frame5.grid()
-        self.frame6.grid()
-        self.frame7.grid()
+
         # Restart button
         restart_btn = Button(
             self.master, text="Restart script",
@@ -73,12 +71,14 @@ class Renamer(Frame):
             padx=5, activebackground='#aa3666'
         )
         restart_btn.grid(sticky=SW, pady=15, padx=10, column=0, row=100)
+        
         # Quit button
         self.quit_btn = Button(
             self.master, text="Завершить", command=self.master.quit,
             bg="#ccc255", pady=5, padx=5, activebackground='#aa3776'
         )
         self.quit_btn.grid(sticky=SE, pady=15, padx=10, column=10, row=100)
+        
         # Start actually our script
         self.extension_choose()
 
@@ -144,11 +144,11 @@ class Renamer(Frame):
             title="Выберите папку",
             initialdir=os.sep
             )
-        self.g1 = str(self.folder)
-        self.g = os.listdir(self.g1)
-        self.total_files = len(self.g)  # Считаем сколько всего файлов в папке
+        self.folder_for_search = str(self.folder)
+        self.listed_folder = os.listdir(self.folder_for_search)
+        self.total_files = len(self.listed_folder)  # Считаем сколько всего файлов в папке
         self.num_of_songs = []
-        for i, f in enumerate(self.g):
+        for i, f in enumerate(self.listed_folder):
             if f.endswith(str(ext[0])):
                 self.num_of_songs.append(f)
         # Считаем сколько файлов с нужным нам расширением
@@ -160,7 +160,7 @@ class Renamer(Frame):
             self.frame2, width=30, selectbackground='#aa3666',
             selectmode=SINGLE
             )
-        for j, file in enumerate(self.g):
+        for j, file in enumerate(self.listed_folder):
             if file.endswith(str(ext[0])):
                 self.list.insert(END, file)  # Показываем ф-лы устраивающие нас
         if self.num_of_songs_with_same_ext != 0:
@@ -243,9 +243,9 @@ class Renamer(Frame):
         self.name = str(self.name_en.get())
         self.num_changed = int(self.num)
         self.name_changed = self.name.replace(" ","_")
-        for j, file in enumerate(self.g):
-            os.chdir(self.g1)
-            r = self.g1 + os.sep + file
+        for j, file in enumerate(self.listed_folder):
+            os.chdir(self.folder_for_search)
+            r = self.folder_for_search + os.sep + file
             self.result_list[j]=file
             if file.endswith(str(ext[0])):
                 # renaming of file :where "self.num_changed" and
