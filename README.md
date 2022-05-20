@@ -1,4 +1,4 @@
-# renamer ##script
+# renamer script
 Script for searching music in Music folder for adding into mpd playlist
 
 ## Purpose of script
