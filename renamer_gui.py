@@ -24,15 +24,11 @@ homedir = str(Path.home())
 target_dir = homedir+os.sep+'backup'
 # the folder where will be stored backuped files
 remarkfile = "remarks.txt"
-root_choice = []
-root_choice0 = []
-root_choice3 = []
 user = str(username)  # укажите имя пользователя
 root2 = [restore_dir]
 main_ext = [".mp3", ".mp4", ".avi", ".mkv", ".jpg", ".png", ".pdf", ".m4a"]
 ext = []
 newext = []
-
 
 class Renamer(Frame):
     def __init__(self, master=None):
