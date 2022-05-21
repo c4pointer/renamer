@@ -44,8 +44,12 @@ class Renamer(Frame):
     def create_widgets(self):
         '''Выполняется  первым'''
         # Initializing our widgets and Frames
-        self.frame, self.frame0, self.frame1, self.frame2, self.frame3, self.frame4 = [
-            Frame()]*6
+        self.frame = Frame()
+        self.frame0 = Frame()
+        self.frame1 = Frame()
+        self.frame2 = Frame()
+        self.frame3 = Frame()
+        self.frame4 = Frame()
 
         self.frame.grid()
         self.frame0.grid()
