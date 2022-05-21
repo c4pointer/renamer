@@ -8,13 +8,10 @@ from tkinter import (Frame, Button, Label, Text, Checkbutton, Entry, Toplevel, L
                      S, UNDERLINE, NORMAL, DISABLED, HORIZONTAL)
 import os
 import platform
-import socket
 import sys
-import time
-import errno
 from pathlib import Path
 from tkinter.messagebox import showerror
-from tkinter.filedialog import askdirectory, askopenfile
+from tkinter.filedialog import askdirectory
 
 operation_platform = platform.system()
 
@@ -50,6 +47,7 @@ class Renamer(Frame):
         self.frame2 = Frame()
         self.frame3 = Frame()
         self.frame4 = Frame()
+        self.frame5 = Frame()
 
         self.frame.grid()
         self.frame0.grid()
@@ -57,6 +55,8 @@ class Renamer(Frame):
         self.frame2.grid()
         self.frame3.grid()
         self.frame4.grid()
+        self.frame5.grid()
+
 
         # Restart button
         restart_btn = Button(
@@ -123,10 +123,8 @@ class Renamer(Frame):
             "файлы в формате: " +
             str((ext[0]))+"\n"
         )
-        self.button = Button(
-            self.frame1, text="Выбрать папкус файлами",
-            command=self.openfolder
-        )
+        self.button = Button(self.frame1, text="Выбрать папкус файлами",
+            command=self.openfolder)
         self.button.grid(row=1, column=0)
         self.label_files.grid(row=0, column=0)
 
