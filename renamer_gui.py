@@ -30,6 +30,7 @@ main_ext = [".mp3", ".mp4", ".avi", ".mkv", ".jpg", ".png", ".pdf", ".m4a"]
 ext = []
 newext = []
 
+
 class Renamer(Frame):
     def __init__(self, master=None):
         super().__init__(master)
@@ -43,12 +44,8 @@ class Renamer(Frame):
     def create_widgets(self):
         '''Выполняется  первым'''
         # Initializing our widgets and Frames
-        self.frame = Frame()
-        self.frame0 = Frame()
-        self.frame1 = Frame()
-        self.frame2 = Frame()
-        self.frame3 = Frame()
-        self.frame4 = Frame()
+        self.frame, self.frame0, self.frame1, self.frame2, self.frame3, self.frame4 = [
+            Frame()]*6
 
         self.frame.grid()
         self.frame0.grid()
@@ -65,14 +62,14 @@ class Renamer(Frame):
             padx=5, activebackground='#aa3666'
         )
         restart_btn.grid(sticky=SW, pady=15, padx=10, column=0, row=100)
-        
+
         # Quit button
         self.quit_btn = Button(
             self.master, text="Завершить", command=self.master.quit,
             bg="#ccc255", pady=5, padx=5, activebackground='#aa3776'
         )
         self.quit_btn.grid(sticky=SE, pady=15, padx=10, column=10, row=100)
-        
+
         # Start actually our script
         self.extension_choose()
 
@@ -121,11 +118,11 @@ class Renamer(Frame):
             "Вы будете переименовывать" +
             "файлы в формате: " +
             str((ext[0]))+"\n"
-            )
+        )
         self.button = Button(
             self.frame1, text="Выбрать папкус файлами",
             command=self.openfolder
-            )
+        )
         self.button.grid(row=1, column=0)
         self.label_files.grid(row=0, column=0)
 
@@ -137,10 +134,11 @@ class Renamer(Frame):
         self.folder = askdirectory(
             title="Выберите папку",
             initialdir=os.sep
-            )
+        )
         self.folder_for_search = str(self.folder)
         self.listed_folder = os.listdir(self.folder_for_search)
-        self.total_files = len(self.listed_folder)  # Считаем сколько всего файлов в папке
+        # Считаем сколько всего файлов в папке
+        self.total_files = len(self.listed_folder)
         self.num_of_songs = []
         for i, f in enumerate(self.listed_folder):
             if f.endswith(str(ext[0])):
@@ -149,11 +147,11 @@ class Renamer(Frame):
         self.num_of_songs_with_same_ext = int(len(self.num_of_songs))
         self.label_files = Label(
             self.frame2, padx=20
-            )
+        )
         self.list = Listbox(
             self.frame2, width=30, selectbackground='#aa3666',
             selectmode=SINGLE
-            )
+        )
         for j, file in enumerate(self.listed_folder):
             if file.endswith(str(ext[0])):
                 self.list.insert(END, file)  # Показываем ф-лы устраивающие нас
@@ -172,7 +170,7 @@ class Renamer(Frame):
             self.button = Button(
                 self.frame2, text="Переименовать",
                 command=self.entry_num
-                )
+            )
             self.button.grid(row=2, column=1)
         else:
             self.label_files["text"] = str(
@@ -184,7 +182,7 @@ class Renamer(Frame):
             self.button = Button(
                 self.frame2, text="Изменить папку",
                 command=self.repeat
-                )
+            )
             self.button.grid(row=2, column=1)
 
     def repeat(self):
@@ -203,7 +201,7 @@ class Renamer(Frame):
         self.button = Button(
             self.frame3, text="Далее",
             command=self.entry_name
-            )
+        )
         self.button.grid(row=2, column=0)
 
     def entry_name(self):
@@ -216,7 +214,7 @@ class Renamer(Frame):
                 "Error", message=str(
                     "Веедите номер а не букву: " +
                     str(self.num_en.get()))
-                )
+            )
         else:  # когда в блоке try не возникло исключения
             self.frame3.destroy()
             self.label_name = Label(self.frame4)
@@ -228,31 +226,31 @@ class Renamer(Frame):
             self.button = Button(
                 self.frame4, text="Далее",
                 command=self.perform
-                )
+            )
             self.button.grid(row=2, column=0)
 
     def perform(self):
-        self.result_list={}
+        self.result_list = {}
 
         self.name = str(self.name_en.get())
         self.num_changed = int(self.num)
-        self.name_changed = self.name.replace(" ","_")
+        self.name_changed = self.name.replace(" ", "_")
         for j, file in enumerate(self.listed_folder):
             os.chdir(self.folder_for_search)
             r = self.folder_for_search + os.sep + file
-            self.result_list[j]=file
+            self.result_list[j] = file
             if file.endswith(str(ext[0])):
                 # renaming of file :where "self.num_changed" and
                 # "self.name_changed" - are taken from entry form
                 t = os.rename(
                     f'{r}',
                     f'{self.num_changed}{"_"}{self.name_changed}{str(newext[0])}'
-                    )
+                )
 
                 self.num_changed += 1
         print(self.result_list)
         self.quit_app()
-        
+
     def restart(self):
         python = sys.executable
         os.execl(python, python, * sys.argv)
@@ -264,7 +262,7 @@ class Renamer(Frame):
             "Процесс завершен успешно \n Переименовано " +
             str(len(self.num_of_songs))+" файлов."
         )
-        self.label_succes.grid(row=10, column =20)
+        self.label_succes.grid(row=10, column=20)
         self.quit_btn.grid(column=20)
 
 
