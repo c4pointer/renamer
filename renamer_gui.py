@@ -103,8 +103,8 @@ class Renamer(Frame):
         )
         # Ниже мы просто выводим все наши виджеты на экран методом .grid
         self.button_ext.grid(row=2, column=0)
-        self.list_of_extensions.grid(row=0, column=0)
-        self.list_extensions.grid(row=1, column=0)
+        self.list_of_extensions.grid(row=0, column=0, padx=40)
+        self.list_extensions.grid(row=1, column=0, pady=20)
 
     def extension_seted(self):
         '''
